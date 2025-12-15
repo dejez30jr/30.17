@@ -120,6 +120,40 @@
         opacity: 0;
       }
     }
+  /* Love Falling Animation */
+    .love {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    /* Falling Images */
+    .fall-img {
+      position: fixed;
+      top: -120px;
+      width: 80px;
+      transform: rotate(25deg);
+      animation: imgFall linear forwards;
+      pointer-events: none;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes imgFall {
+      to {
+        transform: translateY(120vh) rotate(25deg);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -172,6 +206,21 @@
       }
     }
 
+    function startImageFall() {
+      const images = ['asset/Gambar1.jpg', 'asset/Gambar2.jpg', 'asset/Gambar3.jpg'];
+
+      images.forEach((src, index) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.classList.add('fall-img');
+        img.style.left = 20 + index * 30 + 'vw';
+        img.style.animationDuration = '4s';
+        document.body.appendChild(img);
+
+        setTimeout(() => img.remove(), 5000);
+      });
+    }
+
     function startLoveRain() {
       const interval = setInterval(() => {
         const love = document.createElement('div');
@@ -186,7 +235,10 @@
         }, 5000);
       }, 200);
 
-      setTimeout(() => clearInterval(interval), 6000);
+      setTimeout(() => {
+        clearInterval(interval);
+        startImageFall();
+      }, 6000);
     }
 
     function showNo() {
