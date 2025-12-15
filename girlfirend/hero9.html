@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Girlfriend?</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      animation: fadeIn 1s ease;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: #fff;
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(255, 117, 140, 0.4);
+    }
+
+    .btn-no {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-no:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      p {
+        font-size: 0.95rem;
+      }
+    }
+  /* Love Falling Animation */
+    .love {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Question -->
+  <div class="card" id="page-question">
+    <h1>Will You Be My Girlfriend? 💖</h1>
+    <p>Aku punya satu pertanyaan penting yang jujur datang dari hatiku.</p>
+    <div class="btn-group">
+      <button class="btn-yes" onclick="showYes()">Yes</button>
+      <button class="btn-no" onclick="showNo()">No</button>
+    </div>
+  </div>
+
+  <!-- Page Yes -->
+  <div class="card hidden" id="page-yes">
+    <h1>Yeayyyy Selamat ✨</h1>
+    <p>
+      Sekarang kamu resmi menjadi pasangan aku 💕<br>
+      Terima kasih sudah menerima perasaanku.
+      Semoga kita bisa saling menjaga, tumbuh, dan bahagia bersama.
+    </p>
+    <audio id="love-music" loop>
+      <source src="asset/onecallaway.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <!-- Page No -->
+  <div class="card hidden" id="page-no">
+    <h1>Terima Kasih 🤍</h1>
+    <p>
+      Terima kasih sudah jujur dengan perasaanmu.
+      Aku menghargai keputusanmu dan mendoakan yang terbaik untukmu.
+    </p>
+  </div>
+
+  <script>
+    function showYes() {
+      document.getElementById('page-question').classList.add('hidden');
+      document.getElementById('page-yes').classList.remove('hidden');
+      startLoveRain();
+      playMusic();
+    }
+
+    function playMusic() {
+      const music = document.getElementById('love-music');
+      if (music) {
+        music.volume = 0.6;
+        music.play().catch(() => {});
+      }
+    }
+
+    function startLoveRain() {
+      const interval = setInterval(() => {
+        const love = document.createElement('div');
+        love.classList.add('love');
+        love.innerText = '❤️';
+        love.style.left = Math.random() * 100 + 'vw';
+        love.style.animationDuration = 3 + Math.random() * 2 + 's';
+        document.body.appendChild(love);
+
+        setTimeout(() => {
+          love.remove();
+        }, 5000);
+      }, 200);
+
+      setTimeout(() => clearInterval(interval), 6000);
+    }
+
+    function showNo() {
+      document.getElementById('page-question').classList.add('hidden');
+      document.getElementById('page-no').classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
